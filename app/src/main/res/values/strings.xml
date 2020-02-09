@@ -6,4 +6,10 @@
     <string name="init_string">www.google.com</string>
     <string name="edit_msg">Input your link here</string>
     <string name="input_hint"><![CDATA[Input your link here =>]]></string>
+    <string name="prime_init">Let\'s find primes!</string>
+    <string name="start_button">Start</string>
+    <string name="stop_prime">Stop</string>
+    <string name="watch_start">On</string>
+    <string name="watch_stop">Off</string>
+    <string name="time_text">The time watch is off.</string>
 </resources>
