@@ -12,4 +12,5 @@
     <string name="watch_start">On</string>
     <string name="watch_stop">Off</string>
     <string name="time_text">The time watch is off.</string>
+    <string name="location_init">Latitue: loading; Longitude: loading</string>
 </resources>

@@ -74,7 +74,7 @@
         android:id="@+id/watch_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="279dp"
         android:layout_marginBottom="15dp"
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="22dp"
         android:layout_marginBottom="115dp"
         android:onClick="stop_timer"
         android:text="@string/watch_stop"
@@ -108,12 +108,26 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="65dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:text="@string/time_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/myListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/findPrime" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="159dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/location_init"
+        app:layout_constraintBottom_toTopOf="@+id/myListView"
+        app:layout_constraintEnd_toStartOf="@+id/watch_stop"
+        app:layout_constraintStart_toEndOf="@+id/watch_start"
+        app:layout_constraintTop_toBottomOf="@+id/timer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

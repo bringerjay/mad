@@ -1,23 +1,30 @@
 package edu.neu.madcourse.numad20s_qizhou;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.StringRes;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import android.os.SystemClock;
-import android.text.util.Linkify;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+
 
 import java.util.ArrayList;
 
@@ -40,13 +45,20 @@ public class MainActivity extends AppCompatActivity {
     private ListView myListView;
     EditText editText;
     TextView findPrime;
+    TextView showLocation;
     Boolean primeState = false;
     Integer primeNumber = 2;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     TextView setAlarm;
     PowerConnectionReceiver powerConnectionReceiver;
+    double longitude;
+    double latitude;
+    LocationManager lm;
+    Location location;
+    LocationListener locationListener;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +67,38 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         myListView = findViewById(R.id.myListView);
         findPrime = findViewById(R.id.findPrime);
+        showLocation = findViewById(R.id.location);
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+                String newLocation = "Latitude : " + latitude + "\nLongitude : " + longitude;
+                showLocation.setText(newLocation);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+        requestPermissions();
         setAlarm = findViewById(R.id.timer);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
-                                    long arg3)
-            {
-                String url = (String)adapter.getItemAtPosition(position);
+                                    long arg3) {
+                String url = (String) adapter.getItemAtPosition(position);
                 if (!url.startsWith("http://") && !url.startsWith("https://"))
                     url = "http://" + url;
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -87,7 +124,59 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-       }
+        /**
+         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+         //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         System.out.println(location);
+         double longitude_init = location.getLongitude();
+         double latitude_init = location.getLatitude();
+         String newLocation_init = "Latitude : " + latitude_init + "\nLongitude : " + longitude_init;
+         System.out.println(newLocation_init);
+         showLocation.setText(newLocation_init);
+         }
+         else {
+         **/
+        showLocation.setText("Asking for permission");
+        requestPermissions();
+        //}
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermissions() {
+        System.out.println("Requesting permission");
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1111);
+    }
+
+    @SuppressLint("MissingPermission")
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        System.out.println("Requesting responded");
+        if (requestCode == 1111) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                /**
+                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                 requestPermissions();
+                 return;
+                 }**/
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+                location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                double longitude_init = location.getLongitude();
+                double latitude_init = location.getLatitude();
+                String newLocation_init = "Latitude : " + latitude_init + "\nLongitude : " + longitude_init;
+                System.out.println(newLocation_init);
+                showLocation.setText(newLocation_init);
+            }
+            //else {
+               // requestPermissions();
+            //}
+            return;
+        }
+    }
+
 
     public void start_find_primes(View view) {
     StartTask runner = new StartTask();
