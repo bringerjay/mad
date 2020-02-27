@@ -13,4 +13,5 @@
     <string name="watch_stop">Off</string>
     <string name="time_text">The time watch is off.</string>
     <string name="location_init">Latitue: loading; Longitude: loading</string>
+    <string name="empty_not_saved">Link not saved because it is empty.</string>
 </resources>

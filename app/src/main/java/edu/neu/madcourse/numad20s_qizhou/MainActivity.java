@@ -19,10 +19,13 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.SystemClock;
 import android.view.View;
@@ -34,9 +37,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,17 +62,34 @@ public class MainActivity extends AppCompatActivity {
     LocationManager lm;
     Location location;
     LocationListener locationListener;
+    private LinkViewModel linkViewModel;
+    public static final int NEW_LINK_ACTIVITY_REQUEST_CODE = 1;
+    public static final String EXTRA_REPLY = "com.example.android.linklistsql.REPLY";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        linkViewModel = new ViewModelProvider(this).get(LinkViewModel.class);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         myListView = findViewById(R.id.myListView);
+        linkViewModel.getAllLinks().observe(this, new Observer<List<Link>>() {
+            @Override
+            public void onChanged(@Nullable final List<Link> links) {
+                System.out.println(links.size());
+                ArrayList<String> copy = new ArrayList<>(links.size());
+                if (links.size() <= 1){
+                    return;
+                }else {
+                    listItems.add(links.get(links.size()-1).getLink());
+                }
+            }
+        });
         findPrime = findViewById(R.id.findPrime);
-        showLocation = findViewById(R.id.location);
+        //showLocation = findViewById(R.id.location);
+        /**
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -93,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         requestPermissions();
+            **/
         setAlarm = findViewById(R.id.timer);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,9 +160,22 @@ public class MainActivity extends AppCompatActivity {
          }
          else {
          **/
-        showLocation.setText("Asking for permission");
-        requestPermissions();
+        //showLocation.setText("Asking for permission");
+        //requestPermissions();
         //}
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_LINK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Link link = new Link(data.getStringExtra(MainActivity.EXTRA_REPLY));
+            linkViewModel.insert(link);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -272,8 +308,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addListItem() {
-        String link = editText.getText().toString();
-        listItems.add(link);
+        String linkUrl = editText.getText().toString();
+        Link link = new Link(linkUrl);
+        linkViewModel.insert(link);
         adapter.notifyDataSetChanged();
         editText.setText(null);
     }
