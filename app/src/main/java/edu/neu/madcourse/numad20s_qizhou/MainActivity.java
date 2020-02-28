@@ -36,19 +36,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
-    private ListView myListView;
-    EditText editText;
     TextView findPrime;
     TextView showLocation;
     Boolean primeState = false;
@@ -62,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     LocationManager lm;
     Location location;
     LocationListener locationListener;
-    private LinkViewModel linkViewModel;
     public static final int NEW_LINK_ACTIVITY_REQUEST_CODE = 1;
     public static final String EXTRA_REPLY = "com.example.android.linklistsql.REPLY";
 
@@ -70,26 +61,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        linkViewModel = new ViewModelProvider(this).get(LinkViewModel.class);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        myListView = findViewById(R.id.myListView);
-        linkViewModel.getAllLinks().observe(this, new Observer<List<Link>>() {
+        findPrime = findViewById(R.id.findPrime);
+        setAlarm = findViewById(R.id.timer);
+        powerConnectionReceiver = new PowerConnectionReceiver();
+        IntentFilter filter = new IntentFilter("android.intent.action.ACTION_POWER_CONNECTED");
+        filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED");
+        filter.addAction("android.intent.action.ACTION_BATTERY_CHANGED");
+        this.registerReceiver(powerConnectionReceiver, filter);
+        FloatingActionButton fab = findViewById(R.id.add_link_action);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable final List<Link> links) {
-                System.out.println(links.size());
-                ArrayList<String> copy = new ArrayList<>(links.size());
-                if (links.size() <= 1){
-                    return;
-                }else {
-                    listItems.add(links.get(links.size()-1).getLink());
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddLinkActivity.class);
+                startActivityForResult(intent, NEW_LINK_ACTIVITY_REQUEST_CODE);
             }
         });
-        findPrime = findViewById(R.id.findPrime);
-        //showLocation = findViewById(R.id.location);
-        /**
+        showLocation = findViewById(R.id.location);
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -115,67 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         requestPermissions();
-            **/
-        setAlarm = findViewById(R.id.timer);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,
-                                    long arg3) {
-                String url = (String) adapter.getItemAtPosition(position);
-                if (!url.startsWith("http://") && !url.startsWith("https://"))
-                    url = "http://" + url;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
-            }
-        });
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-                listItems);
-        myListView.setAdapter(adapter);
-        editText = (EditText) findViewById(R.id.textInputEditText);
-        powerConnectionReceiver = new PowerConnectionReceiver();
-        IntentFilter filter = new IntentFilter("android.intent.action.ACTION_POWER_CONNECTED");
-        filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED");
-        filter.addAction("android.intent.action.ACTION_BATTERY_CHANGED");
-        this.registerReceiver(powerConnectionReceiver, filter);
-        FloatingActionButton fab = findViewById(R.id.add_to_list_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addListItem();
-                Snackbar.make(view, "Item is added to the list."
-                        , Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        /**
-         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-         //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-         System.out.println(location);
-         double longitude_init = location.getLongitude();
-         double latitude_init = location.getLatitude();
-         String newLocation_init = "Latitude : " + latitude_init + "\nLongitude : " + longitude_init;
-         System.out.println(newLocation_init);
-         showLocation.setText(newLocation_init);
-         }
-         else {
-         **/
-        //showLocation.setText("Asking for permission");
-        //requestPermissions();
-        //}
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == NEW_LINK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Link link = new Link(data.getStringExtra(MainActivity.EXTRA_REPLY));
-            linkViewModel.insert(link);
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -193,11 +122,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1111) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                /**
-                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                 requestPermissions();
-                 return;
-                 }**/
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
                 location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 double longitude_init = location.getLongitude();
@@ -206,9 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(newLocation_init);
                 showLocation.setText(newLocation_init);
             }
-            //else {
-               // requestPermissions();
-            //}
             return;
         }
     }
@@ -307,14 +228,6 @@ public class MainActivity extends AppCompatActivity {
         return newMsg;
     }
 
-    private void addListItem() {
-        String linkUrl = editText.getText().toString();
-        Link link = new Link(linkUrl);
-        linkViewModel.insert(link);
-        adapter.notifyDataSetChanged();
-        editText.setText(null);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -324,35 +237,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-/**
-    public void showInfo(View view){
-        TextView textView = findViewById(R.id.textView);
-        textView.setText("Qi Zhou \n zhou.qi@husky.neu.edu");
-        Button aboutButton = findViewById(R.id.aboutButton);
-        Button backButton = findViewById(R.id.backButton1);
-        aboutButton.setVisibility(View.GONE);
-        backButton.setVisibility(View.VISIBLE);
-    }
-
-    public void back1(View view){
-        TextView textView = findViewById(R.id.textView);
-        textView.setText("www.google.com");
-        Button aboutButton = findViewById(R.id.aboutButton);
-        Button backButton = findViewById(R.id.backButton1);
-        aboutButton.setVisibility(View.VISIBLE);
-        backButton.setVisibility(View.GONE);
-    }
- **/
 }

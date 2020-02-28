@@ -32,4 +32,10 @@ public class LinkRepository {
             linkDAO.insert(link);
         });
     }
+
+    public void deleteAll() {
+        LinkRoomDatabase.databaseWriteExecutor.execute(() -> {
+            linkDAO.deleteAll();
+        });
+    }
 }

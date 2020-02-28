@@ -23,4 +23,8 @@ public class LinkViewModel extends AndroidViewModel {
     LiveData<List<Link>> getAllLinks() { return allLinks; }
 
     public void insert(Link link) { linkRepository.insert(link); }
+
+    public void deleteAll() {
+        linkRepository.deleteAll();
+    }
 }
