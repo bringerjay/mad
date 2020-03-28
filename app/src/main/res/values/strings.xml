@@ -1,17 +1,31 @@
 <resources>
-    <string name="app_name">NUMAD20S_QiZhou</string>
+    <string name="app_name">Family Kanban</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Family KANBAN</string>
+    <string name="nav_header_subtitle">Total Tasks :</string>
+    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="about_string">About</string>
-    <string name="back_string">Back</string>
-    <string name="init_string">www.google.com</string>
-    <string name="edit_msg">Input your link here</string>
-    <string name="input_hint"><![CDATA[Input your link here =>]]></string>
-    <string name="prime_init">Let\'s find primes!</string>
-    <string name="start_button">Start</string>
-    <string name="stop_prime">Stop</string>
-    <string name="watch_start">On</string>
-    <string name="watch_stop">Off</string>
-    <string name="time_text">The time watch is off.</string>
-    <string name="location_init">Latitue: loading; Longitude: loading</string>
-    <string name="empty_not_saved">Link not saved because it is empty.</string>
+    <string name="action_delete">Delete all</string>
+    <string name="tasks_title">Welcome to Family Tasks!</string>
+    <string name="main_welcome_title">Welcome to Family Kanban!</string>
+    <string name="main_subtitle">Check your Family Tasks</string>
+    <string name="tasks_subtitle">List of tasks available</string>
+    <string name="title">Input a short destination name here to save your task!</string>
+    <string name="add_task">Add a Task</string>
+    <string name="short_description">Short Description</string>
+    <string name="add_task_to_kanban">Add task to Family Kanban Board</string>
+    <string name="task_status">Status:</string>
+    <string name="date_time"><![CDATA[Date & Time:]]></string>
+    <string name="welcome_title_tasks">Welcome to Family Tasks!</string>
+    <string name="welcome_title_low">Low Priority Tasks!</string>
+    <string name="welcome_title_medium">Medium Priority Tasks!</string>
+    <string name="welcome_title_high">High Priority Tasks!</string>
+    <string name="welcome_title_board">Welcome to Ala-Too Kanban Board!</string>
+    <string name="welcome_title_todo">To-Do Tasks!</string>
+    <string name="welcome_title_inprogress">In Progress Tasks!</string>
+    <string name="welcome_title_completed">Completed Tasks!</string>
+    <string name="task_title">Title Short Name:</string>
+    <string name="location_label_value" >Destination :</string>
+    <string name="assigned_user_label">Assigned To :</string>
 </resources>

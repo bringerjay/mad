@@ -1,135 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context=".activities.MainActivity"
+    tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:id="@+id/findPrime"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="100dp"
-        android:text="@string/prime_init"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/start_find_prime"
-        android:layout_width="79dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        android:onClick="start_find_primes"
-        android:text="@string/start_button"
-        app:layout_constraintBottom_toTopOf="@+id/timer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findPrime" />
-
-    <Button
-        android:id="@+id/stop_prime"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="10dp"
-        android:onClick="stop_find_primes"
-        android:text="@string/stop_prime"
-        app:layout_constraintBottom_toTopOf="@+id/timer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findPrime"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/watch_start"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="352dp"
-        android:layout_marginEnd="279dp"
-        android:layout_marginBottom="15dp"
-        android:onClick="start_timer"
-        android:text="@string/watch_start"
-        app:layout_constraintBottom_toTopOf="@id/findPrime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.031"
-        tools:text="@string/watch_start" />
+        android:alpha="0.8"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="@dimen/element_spacing_medium">
 
-    <Button
-        android:id="@+id/watch_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="115dp"
-        android:onClick="stop_timer"
-        android:text="@string/watch_stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toEndOf="@+id/stop_prime"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/inner_welcome_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/main_welcome_title"
+            android:textColor="@color/jetBlack"
+            android:textSize="@dimen/text_size_medium" />
 
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/time_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@id/findPrime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findPrime" />
 
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="159dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="600dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/location_init"
-        app:layout_constraintBottom_toTopOf="@id/watch_stop"
-        app:layout_constraintEnd_toStartOf="@+id/watch_stop"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/watch_start"
-        app:layout_constraintTop_toBottomOf="@+id/findPrime"
-        app:layout_constraintVertical_bias="0.644" />
+    </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_link_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="600dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
-    <TextView
-        android:id="@+id/add_link_button_name"
-        android:layout_width="147dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add Links Activity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.613"
-        app:layout_constraintStart_toStartOf="parent" />
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="@dimen/element_spacing_micro">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+</RelativeLayout>
