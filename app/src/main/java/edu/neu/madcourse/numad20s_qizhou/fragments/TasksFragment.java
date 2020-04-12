@@ -172,6 +172,7 @@ public class TasksFragment extends Fragment implements MainActivity.OnMainViewsC
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
                 location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                initDatabase();
             }
             return;
         }

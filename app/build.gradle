@@ -7,8 +7,8 @@ android {
         applicationId "edu.neu.madcourse.numad20s_qizhou"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 7
-        versionName "7.0"
+        versionCode 9
+        versionName "9.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
