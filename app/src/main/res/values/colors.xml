@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#0097a7</color>
-    <color name="colorPrimaryDark">#006978</color>
-    <color name="colorAccent">#56c8d8</color>
-
-    <color name="jetBlack">#0a0a0a</color>
+    <color name="colorPrimaryDark">#7EABB2</color>
+    <color name="colorAccent">#56D8C9</color>
+    <color name="jetBlack">#0A0A0A</color>
     <color name="white">#FFFFFF</color>
     <color name="lightGray">#D3D3D3</color>
-    <color name="lightPurple">#C4AAD9</color>
+    <color name="lightPurple">#D68AF9</color>
     <color name="verylightGray">#16010909</color>
-    <color name="todoColor">#87A2F0</color>
-    <color name="progressColor">#F8C67D</color>
-    <color name="completedColor">#96DD9A</color>
-
+    <color name="todoColor">#ECC8F7</color>
+    <color name="progressColor">#FFC107</color>
+    <color name="completedColor">#8BC34A</color>
 </resources>

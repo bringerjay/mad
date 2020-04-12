@@ -1,27 +1,33 @@
 package edu.neu.madcourse.numad20s_qizhou.model;
-import java.io.Serializable;
 
-public class Task implements Serializable {
-    public String taskId;
-    public String taskTitle;
-    public String taskDescription;
-    public StringBuilder taskDate;
-    public String taskTime;
-    public Card.CardPriority cardPriority = Card.CardPriority.LOW;
-    public Card.CardStatus cardStatus = Card.CardStatus.TODO;
-    public String taskImagePath = null;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Task(String taskId, String taskTitle, String taskDescription, StringBuilder taskDate, String taskTime,
-                Card.CardPriority cardPriority, Card.CardStatus cardStatus, String taskImagePath)
-    {
-        this.taskId = taskId;
-        this.taskTitle = taskTitle;
-        this.taskDescription = taskDescription;
-        this.taskDate = taskDate;
-        this.taskTime = taskTime;
+@Entity(tableName = "tasks")
+public class Task {
+
+    @PrimaryKey(autoGenerate = true)
+    public Integer id;
+    @NonNull
+    public String title;
+    public String description;
+    public String date;
+    public String time;
+    public String cardPriority;
+    public String cardStatus;
+    public String location;
+    public String member;
+
+
+    public Task(@NonNull String title, String description, String date, String time, String cardPriority, String cardStatus, String location, String member) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.time = time;
         this.cardPriority = cardPriority;
         this.cardStatus = cardStatus;
-        this.taskImagePath = taskImagePath;
+        this.location = location;
+        this.member = member;
     }
-
 }

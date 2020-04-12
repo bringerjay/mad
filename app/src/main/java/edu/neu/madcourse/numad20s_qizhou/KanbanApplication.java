@@ -3,7 +3,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
-import edu.neu.madcourse.numad20s_qizhou.managers.TaskManager;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
@@ -18,9 +18,6 @@ public class KanbanApplication extends Application {
         super.onCreate();
 
         instance = this;
-
-        TaskManager.getInstance().initialize();
-
         registerActivityLifecycleCallbacks(activityCallback);
     }
 

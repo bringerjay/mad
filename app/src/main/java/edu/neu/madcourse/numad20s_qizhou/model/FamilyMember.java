@@ -1,23 +1,19 @@
 package edu.neu.madcourse.numad20s_qizhou.model;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
+@Entity(tableName = "members")
+public class FamilyMember {
 
-public class FamilyMember implements Serializable {
-    public String memberName;
-    public String memberEmail;
-    public String memberEmployeeId;
-    public int memberImage;
+    @PrimaryKey
+    @NonNull
+    public String name;
 
-    private FamilyMember(
-            String memberName,
-            String memberEmail,
-            String memberEmployeeId,
-            int memberImage
-    )
+
+    public FamilyMember(String name)
     {
-        this.memberName = memberName;
-        this.memberEmail = memberEmail;
-        this.memberEmployeeId = memberEmployeeId;
-        this.memberImage = memberImage;
+        this.name = name;
     }
 }

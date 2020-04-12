@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_all"
+        android:icon="@drawable/list"
+        android:title="@string/all_menu" />
+    <item
+        android:id="@+id/navigation_incoming"
+        android:icon="@drawable/input"
+        android:title="@string/incoming_menual" />
+    <item
+        android:id="@+id/navigation_inprogress"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="@string/inprogress_menu" />
+    <item
+        android:id="@+id/navigation_completed"
+        android:icon="@drawable/done"
+        android:title="@string/completed_menu" />
+</menu>

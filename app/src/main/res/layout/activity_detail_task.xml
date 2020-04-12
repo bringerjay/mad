@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGray">
+    android:background="#96DDDB">
 
     <RelativeLayout
         android:id="@+id/app_toolbar"
@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/progressColor"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         <TextView
@@ -25,15 +25,6 @@
             android:layout_marginLeft="10dp"
             android:text="@string/add_task"
             android:textColor="@color/white" />
-
-        <ImageView
-            android:id="@+id/close_task_bar"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/close_task" />
 
     </RelativeLayout>
 
@@ -57,7 +48,7 @@
         <EditText
             android:id="@+id/task_title_view"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="64dp"
             android:layout_centerVertical="true"
             android:layout_marginTop="6dp"
             android:background="@drawable/rounded_background"
@@ -71,7 +62,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp" >
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/location_label"
@@ -81,57 +72,22 @@
                 android:text="@string/location_label_value"
                 android:textColor="@color/jetBlack"
                 android:textSize="@dimen/element_spacing_medium" />
-
-            <EditText
-                android:id="@+id/location_input"
-                android:layout_width="300dp"
-                android:layout_height="48dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="100dp"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/roboto_medium"
-                android:hint="@string/title"
-                android:inputType="textMultiLine"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/assignment"
+        <EditText
+            android:id="@+id/location_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
-
-            <TextView
-                android:id="@+id/assignment_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/roboto_medium"
-                android:text="@string/assigned_user_label"
-                android:textColor="@color/jetBlack"
-                android:textSize="@dimen/element_spacing_medium" />
-
-            <LinearLayout
-                android:id="@+id/spinner_assignment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_toEndOf="@+id/assignment_label"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/white"
-                android:gravity="end">
-
-                <Spinner
-                    android:id="@+id/assignment_dropdown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-        </RelativeLayout>
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/roboto_medium"
+            android:hint="@string/dest_hint"
+            android:inputType="textMultiLine"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -239,15 +195,18 @@
                 android:textSize="@dimen/element_spacing_medium" />
 
             <TextView
+                android:id="@+id/assignment_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="30dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Image:"
+                android:text="@string/assigned_user_label"
                 android:textColor="@color/jetBlack"
                 android:textSize="@dimen/element_spacing_medium" />
+
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -282,25 +241,36 @@
                     android:id="@+id/task_date_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
                     android:fontFamily="@font/roboto_medium" />
 
                 <TextView
                     android:id="@+id/task_time_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
                     android:layout_marginTop="28dp"
                     android:fontFamily="@font/roboto_medium" />
+
+                <LinearLayout
+                    android:id="@+id/spinner_assignment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/rounded_background"
+                    android:backgroundTint="@color/white"
+                    android:gravity="end">
+
+                    <Spinner
+                        android:id="@+id/task_assignment_dropdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
             </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/selected_image"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image_select" />
-
         </RelativeLayout>
     </LinearLayout>
 
@@ -308,15 +278,15 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="?attr/colorPrimary"
+        android:background="@color/completedColor"
         android:gravity="center_vertical">
 
         <ImageView
-            android:id="@+id/task_image_bar"
+            android:id="@+id/close_task_bar"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="10dp"
-            android:src="@drawable/add_photo" />
+            android:src="@drawable/close_task" />
 
         <ImageView
             android:id="@+id/date_time_bar"
@@ -331,8 +301,13 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:src="@drawable/save_task" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/done_outline"
+            android:tint="@color/design_default_color_on_primary"
+             />
 
         <ImageView
             android:id="@+id/edit_task_bar"
