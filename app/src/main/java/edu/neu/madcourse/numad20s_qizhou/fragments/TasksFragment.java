@@ -172,7 +172,7 @@ public class TasksFragment extends Fragment implements MainActivity.OnMainViewsC
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
                 location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                initDatabase();
+                //initDatabase();
             }
             return;
         }
@@ -202,7 +202,7 @@ public class TasksFragment extends Fragment implements MainActivity.OnMainViewsC
         String stringLogi = String.format("%.2f", longitude_init);
         String stringLati = String.format("%.2f", latitude_init);
         latestLocation ="location\n" + stringLogi + "," + stringLati;
-        initDatabase();
+        //initDatabase();
         System.out.println("location" + latestLocation);
     }
 
@@ -431,6 +431,7 @@ public class TasksFragment extends Fragment implements MainActivity.OnMainViewsC
             }
                 taskMember.setText(member);
             Location destination = new Location("");
+            if (location!=null){
             double minLog = location.getLongitude()-0.1;
             double maxLog = location.getLongitude()+0.1;
             double minLat = location.getLatitude()-0.1;
@@ -443,7 +444,7 @@ public class TasksFragment extends Fragment implements MainActivity.OnMainViewsC
             Float distance = location.distanceTo(destination);
             String commuteTime = String.format("%.2f", distance/64373.8*60);
             String mins = "Commute Time:\n" + commuteTime + " mins";
-            taskCommute.setText(mins);
+            taskCommute.setText(mins);}
             if(view!=null && isKanbanPage){
                 switch (task.cardStatus) {
                     case "INCOMING": view.setBackground(getResources().getDrawable(R.drawable.incoming_background));
